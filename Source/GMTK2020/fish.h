@@ -4,30 +4,30 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "human.generated.h"
+#include "fish.generated.h"
 
 UCLASS()
-class GMTK2020_API Ahuman : public ACharacter
+class GMTK2020_API Afish : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	Ahuman();
+	Afish();
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* cameraBoom;
+		class USpringArmComponent* cameraBoom;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* FollowCamera;
+		class UCameraComponent* FollowCamera;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, category = "myVar")
-		TSubclassOf<class ASpider> char1;
+		TSubclassOf<class Ahuman> char1;
+
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, category = "myVar")
-		TSubclassOf<class Afish> char2;
-
-
+		TSubclassOf<class ASpider> char2;
 
 protected:
 	// Called when the game starts or when spawned
@@ -39,18 +39,13 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	UFUNCTION()
+		void CameraYaw_z(float val);
 
 	UFUNCTION()
-	void CameraYaw_z(float val);
+		void CameraPitch_y(float val);
 
 	UFUNCTION()
-	void CameraPitch_y(float val);
-
-	UFUNCTION()
-	void moveForward(float val);
-
-	UFUNCTION()
-	void ChangeOwnerShip();
-
-
+		void moveForward(float val);
 };

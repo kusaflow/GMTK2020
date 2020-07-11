@@ -10,6 +10,10 @@
 #include "Math/UnrealMathUtility.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
+#include "UObject/Object.h"
+#include "GameFramework/Controller.h"
+
 // Sets default values
 Ahuman::Ahuman()
 {
@@ -20,9 +24,8 @@ Ahuman::Ahuman()
 	cameraBoom->SetupAttachment(GetRootComponent());
 	cameraBoom->bDoCollisionTest = true;
 	cameraBoom->TargetArmLength = 800;
-	cameraBoom->SetRelativeRotation(FRotator(0, 0, 0));
+	cameraBoom->SetRelativeRotation(FRotator(340, 0, 0));
 	//cameraBoom->RelativeRotation = FRotator(0.f, 0.f, 0.f);
-	cameraBoom->bUsePawnControlRotation = false;
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(cameraBoom, USpringArmComponent::SocketName);
@@ -55,12 +58,15 @@ void Ahuman::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAxis("forward", this, &Ahuman::moveForward);
 
+
 }
 
 void Ahuman::CameraYaw_z(float val) {
 	FRotator newR = FRotator(0, 0, 0);
 	newR.Yaw += val;
 	cameraBoom->AddRelativeRotation(newR);
+
+	//RootComponent->GetChildComponent(1)->AddRelativeRotation(newR);
 
 }
 
@@ -69,15 +75,24 @@ void Ahuman::CameraPitch_y(float val) {
 	newR.Pitch = FMath::Clamp(newR.Pitch + val, -80.0f, 20.0f);
 
 	cameraBoom->SetRelativeRotation(newR);
+
+	
 }
 
 void Ahuman::moveForward(float val) {
 	if (Controller != nullptr) {
 
-		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator Rotation = cameraBoom->GetComponentRotation();//Controller->GetControlRotation();
 		const FRotator YawRotation(0.0f, Rotation.Yaw, 0.0f);
 
 		FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, val);
 	}
 }
+
+
+
+void Ahuman::ChangeOwnerShip() {
+	
+}
+

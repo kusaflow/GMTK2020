@@ -1,8 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Spider.h"
-
+#include "fish.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Math/UnrealMathUtility.h"
@@ -13,13 +12,11 @@
 #include "Kismet/GameplayStatics.h"
 #include "UObject/Object.h"
 #include "GameFramework/Controller.h"
-
 // Sets default values
-ASpider::ASpider()
+Afish::Afish()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 
 	cameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	cameraBoom->SetupAttachment(GetRootComponent());
@@ -30,38 +27,37 @@ ASpider::ASpider()
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(cameraBoom, USpringArmComponent::SocketName);
+
 }
 
 // Called when the game starts or when spawned
-void ASpider::BeginPlay()
+void Afish::BeginPlay()
 {
 	Super::BeginPlay();
-
 	
 }
 
 // Called every frame
-void ASpider::Tick(float DeltaTime)
+void Afish::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
 // Called to bind functionality to input
-void ASpider::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void Afish::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAxis("xAxis", this, &ASpider::CameraYaw_z);
-	PlayerInputComponent->BindAxis("yAxis", this, &ASpider::CameraPitch_y);
+	PlayerInputComponent->BindAxis("xAxis", this, &Afish::CameraYaw_z);
+	PlayerInputComponent->BindAxis("yAxis", this, &Afish::CameraPitch_y);
 
 
-	PlayerInputComponent->BindAxis("forward", this, &ASpider::moveForward);
+	PlayerInputComponent->BindAxis("forward", this, &Afish::moveForward);
 
 
 }
 
-void ASpider::CameraYaw_z(float val) {
+void Afish::CameraYaw_z(float val) {
 	FRotator newR = FRotator(0, 0, 0);
 	newR.Yaw += val;
 	cameraBoom->AddRelativeRotation(newR);
@@ -70,7 +66,7 @@ void ASpider::CameraYaw_z(float val) {
 
 }
 
-void ASpider::CameraPitch_y(float val) {
+void Afish::CameraPitch_y(float val) {
 	FRotator newR = cameraBoom->GetRelativeRotation();
 	newR.Pitch = FMath::Clamp(newR.Pitch + val, -80.0f, 20.0f);
 
@@ -79,7 +75,7 @@ void ASpider::CameraPitch_y(float val) {
 
 }
 
-void ASpider::moveForward(float val) {
+void Afish::moveForward(float val) {
 	if (Controller != nullptr) {
 
 		const FRotator Rotation = cameraBoom->GetComponentRotation();//Controller->GetControlRotation();
@@ -89,4 +85,3 @@ void ASpider::moveForward(float val) {
 		AddMovementInput(Direction, val);
 	}
 }
-
