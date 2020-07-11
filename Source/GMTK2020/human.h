@@ -27,7 +27,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, category = "myVar")
 		TSubclassOf<class Afish> char2;
 
-
+	UPROPERTY(BlueprintReadWrite, category = "myVar")
+	bool isPoss = true;
 
 protected:
 	// Called when the game starts or when spawned
@@ -50,7 +51,7 @@ public:
 	void moveForward(float val);
 
 	UFUNCTION()
-	void ChangeOwnerShip();
+	void myJump();
 
 
 };

@@ -41,6 +41,7 @@ void Afish::BeginPlay()
 void Afish::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	GetCharacterMovement()->AddImpulse(FVector(cameraBoom->GetForwardVector().X * 5000000 * DeltaTime, cameraBoom->GetForwardVector().Y * 5000000 * DeltaTime, 0));
 
 }
 
@@ -52,9 +53,11 @@ void Afish::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("yAxis", this, &Afish::CameraPitch_y);
 
 
-	PlayerInputComponent->BindAxis("forward", this, &Afish::moveForward);
+	//PlayerInputComponent->BindAxis("forward", this, &Afish::moveForward);
 
+	PlayerInputComponent->BindAction("jump", IE_Pressed, this, &Afish::myJump);
 
+	
 }
 
 void Afish::CameraYaw_z(float val) {
@@ -84,4 +87,12 @@ void Afish::moveForward(float val) {
 		FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, val);
 	}
+}
+
+void Afish::myJump() {
+	GetCharacterMovement()->Velocity = cameraBoom->GetForwardVector() * 50;
+	
+	Jump();
+
+	GetCharacterMovement()->Velocity = FVector(0);
 }

@@ -44,6 +44,7 @@ void ASpider::BeginPlay()
 void ASpider::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	GetCharacterMovement()->AddImpulse(FVector(cameraBoom->GetForwardVector().X * 5000000 * DeltaTime, cameraBoom->GetForwardVector().Y * 5000000 * DeltaTime, 0));
 
 }
 

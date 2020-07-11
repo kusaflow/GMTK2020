@@ -28,6 +28,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, category = "myVar")
 		TSubclassOf<class Afish> char2;
 
+	UPROPERTY(BlueprintReadWrite, category = "myVar")
+	bool isPoss = false;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

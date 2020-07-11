@@ -45,6 +45,11 @@ void Ahuman::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+		GetCharacterMovement()->AddImpulse(FVector(cameraBoom->GetForwardVector().X * 5000000 * DeltaTime, cameraBoom->GetForwardVector().Y * 5000000 * DeltaTime, 0));
+		//RootComponent->AddRelativeLocation(RootComponent->GetForwardVector() *50);
+	
+
+
 }
 
 // Called to bind functionality to input
@@ -57,6 +62,7 @@ void Ahuman::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 
 	PlayerInputComponent->BindAxis("forward", this, &Ahuman::moveForward);
+	PlayerInputComponent->BindAction("jump", IE_Pressed, this, &Ahuman::myJump);
 
 
 }
@@ -92,7 +98,7 @@ void Ahuman::moveForward(float val) {
 
 
 
-void Ahuman::ChangeOwnerShip() {
-	
+void Ahuman::myJump() {
+	Jump();
 }
 

@@ -44,8 +44,14 @@ public:
 		void CameraYaw_z(float val);
 
 	UFUNCTION()
-		void CameraPitch_y(float val);
+	void CameraPitch_y(float val);
 
 	UFUNCTION()
-		void moveForward(float val);
+	void moveForward(float val);
+
+	UFUNCTION()
+	void myJump();
+
+	UPROPERTY(BlueprintReadWrite, category = "myVar")
+	bool isPoss = false;
 };
